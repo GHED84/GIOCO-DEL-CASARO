@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIOCO DEL CASARO DI SWAMI PASPÖR</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap'); /* Font Heavy Metal */
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #282828;
+            color: white;
+            max-width: 900px;
+            margin: auto;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Metal Mania', cursive;
+            color: #FF0000;
+            font-size: 60px;
+            text-shadow: 3px 3px 10px black;
+            margin-bottom: 30px;
+        }
+
+        h2, h3 {
+            color: #FFD700;
+            text-shadow: 2px 2px 5px black;
+        }
+
+        p {
+            font-size: 18px;
+            color: #D3D3D3;
+            text-shadow: 1px 1px 5px black;
+        }
+
+        .button {
+            display: block;
+            margin: 15px auto;
+            padding: 15px 30px;
+            font-size: 22px;
+            font-family: 'Metal Mania', cursive;
+            background-color: #FF4500;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 3px 3px 10px black;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #FF6347;
+        }
+
+        .scene {
+            display: none;
+        }
+
+        .visible {
+            display: block;
+        }
+
+        .background {
+            background-color: #282828;
+            padding: 20px;
+        }
+
+        .nickname {
+            font-family: 'Metal Mania', cursive;
+            color: #FFD700;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body class="background">
+
+    <!-- Schermata iniziale di spiegazione -->
+    <div id="intro-screen" class="visible">
+        <h1>GIOCO DEL CASARO DI SWAMI PASPÖR</h1>
+        <p>Benvenuto nel "Gioco del Casaro", dove vestirai i panni di "Boga della Costa" e ti cimenterai nella produzione di diversi prodotti caseari.</p>
+        <p>Ogni tua decisione avrà un impatto sul risultato finale. Sei pronto a mettere alla prova la tua esperienza nel settore caseario?</p>
+        <button class="button" onclick="startGame()">Inizia il Gioco</button>
+    </div>
+
+    <!-- Schermata del nickname -->
+    <div class="nickname">
+        Giocatore: Boga della Costa
+    </div>
+
+    <!-- Selezione del prodotto -->
+    <div id="product-selection" class="scene">
+        <h2>Scegli il prodotto da produrre</h2>
+        <p>Sei pronto? Scegli tra le seguenti opzioni per iniziare il processo di produzione:</p>
+        <button class="button" onclick="chooseProduct('formaggio fresco')">Formaggio Fresco</button>
+        <button class="button" onclick="chooseProduct('formaggio stagionato')">Formaggio Stagionato</button>
+        <button class="button" onclick="chooseProduct('mozzarella')">Mozzarella</button>
+        <button class="button" onclick="chooseProduct('yogurt')">Yogurt</button>
+    </div>
+
+    <!-- Passaggi e scelte del formaggio fresco -->
+    <div id="formaggio-fresco" class="scene">
+        <h3>Produzione del Formaggio Fresco - Passo 1</h3>
+        <p>Inizia con la pastorizzazione del latte. Scegli correttamente la temperatura e il tempo di pastorizzazione:</p>
+        <div id="pastorizzazione-fresco"></div>
+    </div>
+
+    <div id="formaggio-fresco-step2" class="scene">
+        <h3>Produzione del Formaggio Fresco - Passo 2</h3>
+        <p>Prossima fase: aggiunta del caglio. Scegli il giusto tempo di coagulazione:</p>
+        <div id="caglio-fresco"></div>
+    </div>
+
+    <div id="formaggio-fresco-step3" class="scene">
+        <h3>Produzione del Formaggio Fresco - Passo 3</h3>
+        <p>Prossima fase: rottura della cagliata. Scegli la dimensione corretta dei grani:</p>
+        <div id="rottura-fresco"></div>
+    </div>
+
+    <div id="formaggio-fresco-step4" class="scene">
+        <h3>Produzione del Formaggio Fresco - Passo 4</h3>
+        <p>Fase finale: salatura. Quale metodo di salatura utilizzi?</p>
+        <div id="salatura-fresco"></div>
+    </div>
+
+    <!-- Passaggi e scelte del formaggio stagionato -->
+    <div id="formaggio-stagionato" class="scene">
+        <h3>Produzione del Formaggio Stagionato - Passo 1</h3>
+        <p>Inizia con la pastorizzazione del latte:</p>
+        <div id="pastorizzazione-stagionato"></div>
+    </div>
+
+    <div id="formaggio-stagionato-step2" class="scene">
+        <h3>Produzione del Formaggio Stagionato - Passo 2</h3>
+        <p>Prossima fase: aggiunta del caglio</p>
+        <div id="caglio-stagionato"></div>
+    </div>
+
+    <div id="formaggio-stagionato-step3" class="scene">
+        <h3>Produzione del Formaggio Stagionato - Passo 3</h3>
+        <p>Prossima fase: rottura della cagliata</p>
+        <div id="rottura-stagionato"></div>
+    </div>
+
+    <div id="formaggio-stagionato-step4" class="scene">
+        <h3>Produzione del Formaggio Stagionato - Passo 4</h3>
+        <p>Fase finale: stagionatura</p>
+        <div id="stagionatura-stagionato"></div>
+    </div>
+
+    <!-- Passaggi e scelte della mozzarella -->
+    <div id="mozzarella" class="scene">
+        <h3>Produzione della Mozzarella - Passo 1</h3>
+        <p>Inizia con la coagulazione del latte:</p>
+        <div id="coagulazione-mozzarella"></div>
+    </div>
+
+    <div id="mozzarella-step2" class="scene">
+        <h3>Produzione della Mozzarella - Passo 2</h3>
+        <p>Prossima fase: rottura della cagliata</p>
+        <div id="rottura-mozzarella"></div>
+    </div>
+
+    <div id="mozzarella-step3" class="scene">
+        <h3>Produzione della Mozzarella - Passo 3</h3>
+        <p>Prossima fase: filatura della pasta</p>
+        <div id="filatura-mozzarella"></div>
+    </div>
+
+    <div id="mozzarella-step4" class="scene">
+        <h3>Produzione della Mozzarella - Passo 4</h3>
+        <p>Fase finale: formatura</p>
+        <div id="formatura-mozzarella"></div>
+    </div>
+
+    <!-- Passaggi e scelte dello yogurt -->
+    <div id="yogurt" class="scene">
+        <h3>Produzione dello Yogurt - Passo 1</h3>
+        <p>Inizia con l'inoculazione dei fermenti lattici:</p>
+        <div id="fermenti-yogurt"></div>
+    </div>
+
+    <div id="yogurt-step2" class="scene">
+        <h3>Produzione dello Yogurt - Passo 2</h3>
+        <p>Prossima fase: fermentazione</p>
+        <div id="fermentazione-yogurt"></div>
+    </div>
+
+    <div id="yogurt-step3" class="scene">
+        <h3>Produzione dello Yogurt - Passo 3</h3>
+        <p>Prossima fase: conservazione</p>
+        <div id="conservazione-yogurt"></div>
+    </div>
+
+    <!-- Risultato finale -->
+    <div id="final-score" class="scene">
+        <h2>Risultato Finale</h2>
+        <p id="final-result"></p>
+        <p id="feedback"></p>
+    </div>
+
+    <script>
+        let score = 100;
+        let errors = [];
+
+        // Funzione per iniziare il gioco
+        function startGame() {
+            document.getElementById('intro-screen').classList.remove('visible');
+            document.getElementById('product-selection').classList.add('visible');
+        }
+
+        // Funzione per selezionare il prodotto da produrre
+        function chooseProduct(product) {
+            document.querySelectorAll('.scene').forEach(scene => scene.classList.remove('visible'));
+            document.getElementById(product.replace(' ', '-')).classList.add('visible');
+
+            if (product === 'formaggio fresco') {
+                setupFormaggioFresco();
+            } else if (product === 'formaggio stagionato') {
+                setupFormaggioStagionato();
+            } else if (product === 'mozzarella') {
+                setupMozzarella();
+            } else if (product === 'yogurt') {
+                setupYogurt();
+            }
+        }
+
+        // Funzione per randomizzare le scelte
+        function shuffleAndDisplayOptions(options, containerId, product, step, nextStepId) {
+            const shuffledOptions = options.sort(() => Math.random() - 0.5);
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            shuffledOptions.forEach(option => {
+                const button = document.createElement('button');
+                button.classList.add('button');
+                button.innerText = option.text;
+                button.onclick = () => nextStep(product, option.correct ? 'corretta' : 'sbagliata', step, nextStepId);
+                container.appendChild(button);
+            });
+        }
+
+        // Randomizzazione delle opzioni per il formaggio fresco
+        function setupFormaggioFresco() {
+            // Passo 1: Pastorizzazione
+            const pastOptions = [
+                { text: "Pastorizza il latte a 72°C per 15 secondi", correct: true },
+                { text: "Pastorizza il latte a 80°C per 20 secondi", correct: false },
+                { text: "Pastorizza il latte a 60°C per 10 minuti", correct: false }
+            ];
+            shuffleAndDisplayOptions(pastOptions, 'pastorizzazione-fresco', 'formaggio fresco', 'pastorizzazione', 'formaggio-fresco-step2');
+
+            // Passo 2: Caglio
+            const caglioOptions = [
+                { text: "Aggiungi il caglio e aspetta 30 minuti", correct: true },
+                { text: "Aggiungi il caglio e aspetta 15 minuti", correct: false },
+                { text: "Aggiungi il caglio e aspetta 45 minuti", correct: false }
+            ];
+            shuffleAndDisplayOptions(caglioOptions, 'caglio-fresco', 'formaggio fresco', 'caglio', 'formaggio-fresco-step3');
+
+            // Passo 3: Rottura
+            const rotturaOptions = [
+                { text: "Rompi la cagliata fino a ottenere grani della dimensione di un chicco di mais", correct: true },
+                { text: "Rompi la cagliata fino a ottenere grani della dimensione di una noce", correct: false },
+                { text: "Rompi la cagliata fino a ottenere grani della dimensione di un fagiolo", correct: false }
+            ];
+            shuffleAndDisplayOptions(rotturaOptions, 'rottura-fresco', 'formaggio fresco', 'rottura', 'formaggio-fresco-step4');
+
+            // Passo 4: Salatura
+            const salaturaOptions = [
+                { text: "Salatura a secco con 2% di sale", correct: true },
+                { text: "Salatura a bagno per 24 ore", correct: false },
+                { text: "Salatura a secco con 5% di sale", correct: false }
+            ];
+            shuffleAndDisplayOptions(salaturaOptions, 'salatura-fresco', 'formaggio fresco', 'salatura', 'final-score');
+        }
+
+        // Funzione per setup Formaggio Stagionato
+        function setupFormaggioStagionato() {
+            // Passo 1: Pastorizzazione
+            const pastOptions = [
+                { text: "Pastorizza il latte a 72°C per 15 secondi", correct: true },
+                { text: "Pastorizza il latte a 60°C per 10 minuti", correct: false },
+                { text: "Pastorizza il latte a 85°C per 20 secondi", correct: false }
+            ];
+            shuffleAndDisplayOptions(pastOptions, 'pastorizzazione-stagionato', 'formaggio stagionato', 'pastorizzazione', 'formaggio-stagionato-step2');
+
+            // Passo 2: Caglio
+            const caglioOptions = [
+                { text: "Aggiungi il caglio e aspetta 40 minuti", correct: true },
+                { text: "Aggiungi il caglio e aspetta 20 minuti", correct: false },
+                { text: "Aggiungi il caglio e aspetta 60 minuti", correct: false }
+            ];
+            shuffleAndDisplayOptions(caglioOptions, 'caglio-stagionato', 'formaggio stagionato', 'caglio', 'formaggio-stagionato-step3');
+
+            // Passo 3: Rottura
+            const rotturaOptions = [
+                { text: "Rompi la cagliata fino a ottenere grani della dimensione di un chicco di riso", correct: true },
+                { text: "Rompi la cagliata in pezzi grossolani", correct: false },
+                { text: "Rompi la cagliata fino a ottenere grani della dimensione di una noce", correct: false }
+            ];
+            shuffleAndDisplayOptions(rotturaOptions, 'rottura-stagionato', 'formaggio stagionato', 'rottura', 'formaggio-stagionato-step4');
+
+            // Passo 4: Stagionatura
+            const stagionaturaOptions = [
+                { text: "Stagiona il formaggio per almeno 6 mesi", correct: true },
+                { text: "Stagiona il formaggio per 2 mesi", correct: false },
+                { text: "Stagiona il formaggio per 12 mesi", correct: false }
+            ];
+            shuffleAndDisplayOptions(stagionaturaOptions, 'stagionatura-stagionato', 'formaggio stagionato', 'stagionatura', 'final-score');
+        }
+
+        // Funzione per setup Mozzarella
+        function setupMozzarella() {
+            // Passo 1: Coagulazione
+            const coagulazioneOptions = [
+                { text: "Coagula il latte con caglio per 30 minuti", correct: true },
+                { text: "Coagula il latte per 20 minuti", correct: false },
+                { text: "Coagula il latte per 45 minuti", correct: false }
+            ];
+            shuffleAndDisplayOptions(coagulazioneOptions, 'coagulazione-mozzarella', 'mozzarella', 'coagulazione', 'mozzarella-step2');
+
+            // Passo 2: Rottura
+            const rotturaOptions = [
+                { text: "Rompi la cagliata in piccoli pezzi", correct: true },
+                { text: "Rompi la cagliata grossolanamente", correct: false },
+                { text: "Rompi la cagliata in grani troppo piccoli", correct: false }
+            ];
+            shuffleAndDisplayOptions(rotturaOptions, 'rottura-mozzarella', 'mozzarella', 'rottura', 'mozzarella-step3');
+
+            // Passo 3: Filatura
+            const filaturaOptions = [
+                { text: "Filatura della pasta a 85°C", correct: true },
+                { text: "Filatura della pasta a 60°C", correct: false },
+                { text: "Filatura della pasta a 100°C", correct: false }
+            ];
+            shuffleAndDisplayOptions(filaturaOptions, 'filatura-mozzarella', 'mozzarella', 'filatura', 'mozzarella-step4');
+
+            // Passo 4: Formatura
+            const formaturaOptions = [
+                { text: "Formatura a mano della mozzarella", correct: true },
+                { text: "Formatura con macchina automatica", correct: false },
+                { text: "Formatura in acqua bollente", correct: false }
+            ];
+            shuffleAndDisplayOptions(formaturaOptions, 'formatura-mozzarella', 'mozzarella', 'formatura', 'final-score');
+        }
+
+        // Funzione per setup Yogurt
+        function setupYogurt() {
+            // Passo 1: Fermenti
+            const fermentiOptions = [
+                { text: "Aggiungi fermenti lattici e mantieni a 42°C", correct: true },
+                { text: "Aggiungi fermenti lattici e mantieni a 30°C", correct: false },
+                { text: "Aggiungi fermenti lattici e mantieni a 50°C", correct: false }
+            ];
+            shuffleAndDisplayOptions(fermentiOptions, 'fermenti-yogurt', 'yogurt', 'fermenti', 'yogurt-step2');
+
+            // Passo 2: Fermentazione
+            const fermentazioneOptions = [
+                { text: "Fermenta per 8 ore", correct: true },
+                { text: "Fermenta per 4 ore", correct: false },
+                { text: "Fermenta per 12 ore", correct: false }
+            ];
+            shuffleAndDisplayOptions(fermentazioneOptions, 'fermentazione-yogurt', 'yogurt', 'fermentazione', 'yogurt-step3');
+
+            // Passo 3: Conservazione
+            const conservazioneOptions = [
+                { text: "Conserva lo yogurt a 4°C", correct: true },
+                { text: "Conserva lo yogurt a 10°C", correct: false },
+                { text: "Conserva lo yogurt a 0°C", correct: false }
+            ];
+            shuffleAndDisplayOptions(conservazioneOptions, 'conservazione-yogurt', 'yogurt', 'conservazione', 'final-score');
+        }
+
+        // Funzione per passare allo step successivo
+        function nextStep(product, decision, step, nextStepId) {
+            if (decision === 'sbagliata') {
+                score -= 20;
+                errors.push(step);
+            }
+
+            // Nasconde lo step corrente e mostra quello successivo
+            document.querySelectorAll('.scene').forEach(scene => scene.classList.remove('visible'));
+            document.getElementById(nextStepId).classList.add('visible');
+
+            if (nextStepId === 'final-score') {
+                showFinalResult();
+            }
+        }
+
+        // Funzione per mostrare il risultato finale e il feedback
+        function showFinalResult() {
+            const resultText = score >= 60 ? "Complimenti! Hai creato un buon prodotto." : "Purtroppo, hai commesso troppi errori.";
+            document.getElementById('final-result').innerText = `Il tuo punteggio finale è: ${score}/100. ${resultText}`;
+
+            let feedback = '';
+            if (errors.length > 0) {
+                feedback = 'Hai sbagliato i seguenti passaggi: ';
+                feedback += errors.join(', ') + '. Ecco perché: ';
+                feedback += errors.includes('pastorizzazione') ? 'La pastorizzazione del latte deve essere a 72°C per 15 secondi per eliminare i batteri senza compromettere le proteine del latte. ' : '';
+                feedback += errors.includes('caglio') ? 'Il caglio deve coagulare per 30 minuti per consentire una corretta solidificazione della cagliata. ' : '';
+                feedback += errors.includes('rottura') ? 'La cagliata deve essere rotta fino a ottenere grani della dimensione di un chicco di mais per assicurare una buona consistenza. ' : '';
+                feedback += errors.includes('salatura') ? 'La salatura a secco con il 2% di sale è l’ideale per conservare il sapore senza alterare il prodotto. ' : '';
+                feedback += errors.includes('filatura') ? 'La filatura della mozzarella va eseguita a 85°C per garantire la giusta elasticità. ' : '';
+                feedback += errors.includes('fermentazione') ? 'La fermentazione dello yogurt deve durare 8 ore per ottenere una consistenza liscia e sapore acidulo. ' : '';
+            } else {
+                feedback = 'Hai fatto tutte le scelte corrette. Ottimo lavoro!';
+            }
+            document.getElementById('feedback').innerText = feedback;
+        }
+    </script>
+
+</body>
+</html>
+
+
